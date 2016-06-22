@@ -1,4 +1,3 @@
-
 <!--
 @author Arshak Khachatrian (<a href="mailto:akhxtern@gmail.com">akhxtern@gmail.com</a>)
 @website http://spacee.xyz
@@ -7,10 +6,10 @@
 **********
 *
 *   *** PAPER FAB MENU ***
-*   
+*
 *   This floating action button is using the Material Design concept of expandable
 *   Paper Fab Button and using the Polymer components to make the concept happen.
-*   
+*
 *   *** EXAMPLE - without links ***
 *   <paper-fab-menu color="teal" icon="add" position="vertical">
 *        <paper-fab-menu-item color="teal" label="Favorites" icon="star" ></paper-fab-menu-item>
@@ -23,13 +22,13 @@
 *   <paper-fab-menu color="red" icon="add" position="horizontal">
 *        <a href="#/favorites">
 *            <paper-fab-menu-item color="red" label="Favorites" icon="star" ></paper-fab-menu-item>
-*        </a>    
+*        </a>
 *        <a href="#/favorites">
 *            <paper-fab-menu-item color="red" label="Favorites" icon="star" ></paper-fab-menu-item>
-*        </a>  
+*        </a>
 *        <a href="#/favorites">
 *            <paper-fab-menu-item color="red" label="Favorites" icon="star" ></paper-fab-menu-item>
-*        </a>  
+*        </a>
 *   </paper-fab-menu>
 *
 ********** -->
@@ -44,139 +43,199 @@
 <dom-module id="paper-fab-menu">
     <style is="custom-style">
         :host {
-            width : 60px;
+            width: 60px;
         }
 
         :host .layout {
-            max-width:;
+            max-width: ;
         }
 
         :host([position="vertical"]) .menu-fab-button {
-            padding-top : 7px;
-        }
-        :host([position="horizontal"]) .menu-fab-button {
-            padding-left : 7px;
-        }
-        :host-context([dir="rtl"]) :host([position="horizontal"]) .menu-fab-button,
-        :host-context([dir="rtl"])[position="horizontal"] .menu-fab-button, /* Polymer workaround */
-        :host([dir="rtl"][position="horizontal"]) .menu-fab-button {
-            padding-left : 0;
-            padding-right : 7px;
+            padding-top: 7px;
         }
 
-        :host .menu-items ::content a {
+        :host([position="horizontal"]) .menu-fab-button {
+            padding-left: 7px;
+        }
+
+        :host-context([dir="rtl"]):host([position="horizontal"]) .menu-fab-button,
+        :host-context([dir="rtl"])[position="horizontal"] .menu-fab-button,
+        /* Polymer workaround */
+
+        :host([dir="rtl"][position="horizontal"]) .menu-fab-button {
+            padding-left: 0;
+            padding-right: 7px;
+        }
+
+        :host .menu-items::content a {
             display: block;
             margin: 7px;
         }
 
-        :host .menu-items ::content a > paper-fab-menu-item {
+        :host .menu-items::content a> paper-fab-menu-item {
             margin: 0;
         }
 
-        :host paper-fab ::content iron-icon {
-            transition : 200ms all;
-        }
-
-        :host .menu-fab-button[open] paper-fab ::content iron-icon {
-            transform : rotate(45deg);
-        }
-
         :host .menu-items {
-            order : 1;
+            order: 1;
         }
 
         :host .menu-fab-button {
-            order : 2;
-        }
-
-        :host .menu-items[open] ::content .menu-item {
-            transform : scale(1);
-        }
-
-        :host .menu-items ::content paper-fab-menu-item:nth-child(1) .menu-item, :host .menu-items ::content a:nth-child(1) .menu-item {
-            transition: 100ms all;
-            transition-delay: 250ms;
-        }
-
-        :host .menu-items ::content paper-fab-menu-item:nth-child(2) .menu-item, :host .menu-items ::content a:nth-child(2) .menu-item {
-            transition: 100ms all;
-            transition-delay: 200ms;
-        }
-
-        :host .menu-items ::content paper-fab-menu-item:nth-child(3) .menu-item, :host .menu-items ::content a:nth-child(3) .menu-item {
-            transition: 100ms all;
-            transition-delay: 150ms;
-        }
-
-        :host .menu-items ::content paper-fab-menu-item:nth-child(4) .menu-item, :host .menu-items ::content a:nth-child(4) .menu-item {
-            transition: 100ms all;
-            transition-delay: 100ms;
-        }
-
-        :host .menu-items ::content paper-fab-menu-item:nth-child(5) .menu-item, :host .menu-items ::content a:nth-child(5) .menu-item {
-            transition: 100ms all;
-            transition-delay: 50ms;
-        }
-
-        :host .menu-items ::content paper-fab-menu-item:nth-child(6) .menu-item, :host .menu-items ::content a:nth-child(6) .menu-item {
-            transition: 100ms all;
-        }
-
-        :host paper-fab {
-            transform : scale(0);
-            animation : 300ms scale 300ms 1 forwards alternate cubic-bezier(0.165, 0.84, 0.44, 1);
-        }
-
-        @keyframes scale {
-            0% {
-                transform         : scale(0);
-                -webkit-transform : scale(0);
-            }
-            100% {
-                transform         : scale(1.0);
-                -webkit-transform : scale(1.0);
-            }
+            order: 2;
         }
     </style>
     <template>
-        <div class$="layout {{position}}">
-            <div open$="{{ show }}" id="mainFab" class="menu-fab-button layout vertical self-center">
+        <div class$="layout {{position}} paper-fab-menu-container">
+            <div id="mainFab" class="menu-fab-button layout vertical self-center">
                 <paper-fab id="paperFab" icon="{{ icon }}"></paper-fab>
             </div>
-            <div open$="{{ show }}" id="mainItems" class$="menu-items flex layout {{position}} self-center">
-                <content select="a, paper-fab-menu-item"></content>
+            <div id="mainItems" class$="menu-items flex layout {{position}} self-center">
+                <content id="items" select="a, paper-fab-menu-item"></content>
             </div>
         </div>
     </template>
     <script>
         Polymer({
-            is         : 'paper-fab-menu',
-            properties : {
-                position : {
-                    value : 'vertical' // or "horizontal"
-                },
-                show     : {
-                    value : false
-                },
-                color: {
-                    type: String // any color you would like to be a main paper-fab
+            is: 'paper-fab-menu',
+            properties: {
+              /**
+               * Vertical or horizontal position of the menu.
+               */
+              position: {
+                type: String,
+                value: 'vertical'
+              },
+
+              opened: {
+                type: Number,
+                value: false,
+                notify: true
+              },
+              /**
+               * The color of the main button.
+               */
+              color: String
+            },
+            listeners: {
+              'mouseover': 'testOpen',
+              'mouseout': 'testClose'
+              // 'mainFab.mouseover'   : 'testOpen',
+              // 'mainFab.mouseout'    : 'testClose',
+              // 'mainItems.mouseover' : 'testOpen',
+              // 'mainItems.mouseout'  : 'testClose'
+            },
+
+            observers: [
+              '_openedChanged(opened)',
+              '_colorChanged(color)'
+            ],
+
+            ready: function() {
+              this._childobserver = Polymer.dom(this.$.items).observeNodes(function(info) {
+                this.updateDelay();
+              }.bind(this));
+              this.listen(document.body, 'click', '_detectClick');
+            },
+
+            detached: function() {
+              Polymer.dom(this.$.items).unobserveNodes(this._childobserver);
+              this.unlisten(document.body, 'click', '_detectClick');
+            },
+
+            // Opens the menu
+            open: function() {
+              this.opened = true;
+            },
+
+            // Close the menu
+            close: function() {
+              this.opened = false;
+            },
+
+            // Tests if the menu should be opened and opens it if nescesary
+            testOpen: function(e) {
+              if (this.opened) {
+                return;
+              }
+              if (e.path[0].classList.contains('paper-fab-menu-container')) {
+                return;
+              }
+              let isMain = true;
+              for (let i = 0, len = e.path.length; i < len; i++) {
+                let item = e.path[i];
+                if (!item.classList) {
+                  continue;
                 }
+                if (item.classList.contains('menu-items') ||
+                  item.nodeName === 'PAPER-FAB-MENU-ITEM') {
+                  isMain = false;
+                  break;
+                }
+              }
+              if (isMain) {
+                this.opened = true;
+              }
             },
-            listeners  : {
-                'mainFab.mouseover'   : 'open',
-                'mainFab.mouseout'    : 'close',
-                'mainItems.mouseover' : 'open',
-                'mainItems.mouseout'  : 'close'
+
+            // Tests if the menu should be closed and closes it if nescesary
+            testClose: function(e) {
+              if (!this.opened) {
+                return;
+              }
+              var item = e.path[0];
+              if (item && item.classList && item.classList.contains('paper-fab-menu-container')) {
+                this.opened = false;
+                return;
+              } else if (item.id === 'tooltip') {
+                this.opened = false;
+                return;
+              } else if (item.id === 'paperFab' && e.path[1].id === 'mainFab') {
+                this.opened = false;
+                return;
+              }
             },
-            ready: function () {
-                if(this.color)
-                    this.$.paperFab.style.backgroundColor = this.color;
+
+            // Opens or closes the menu depending on the argument.
+            _openedChanged: function(opened) {
+              var style = 'transition : 200ms all;transform : rotate(';
+              style += opened ? '45' : '0';
+              this.$.paperFab.customStyle['--paper-fab-iron-icon'] = style + 'deg);';
+              this.$.paperFab.updateStyles();
+              Polymer.dom(this).children.forEach(function(child) {
+                opened ? child.classList.add('opened') : child.classList.remove('opened');
+              });
             },
-            open       : function() {
-                this.show = true;
+
+            // Called when color has changed.
+            _colorChanged: function(color) {
+              this.customStyle['--paper-fab-background'] = color;
+              this.updateStyles();
+              // For some reason code above do not affect main fab at bootstrap time.
+              this.$.paperFab.style.backgroundColor = color;
             },
-            close      : function() {
-                this.show = false;
+
+            // Updates animation delat time attribute in distributed children.
+            updateDelay: function() {
+              var time = 0;
+              Polymer.dom(this).children.reverse().forEach(function(child) {
+                child.transitionDelay = time;
+                time += 50;
+              });
+            },
+
+            // Closes menu on body click.
+            _detectClick: function(e) {
+              var ctrl = this.$.paperFab;
+              var isMainButton = e.path.some(function(item) {
+                return item === ctrl;
+              });
+              if (isMainButton) {
+                if (!this.opened) {
+                  this.opened = true;
+                }
+                return;
+              }
+              this.opened = false;
             }
         })
     </script>

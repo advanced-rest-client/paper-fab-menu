@@ -2,43 +2,81 @@
     <template>
         <style is="custom-style">
             :host .menu-item {
-                position : relative;
+                position: relative;
+                transition: 100ms all;
+                transform: scale(0);
+                /*animation: 300ms scaleBack 300ms 1 forwards alternate cubic-bezier(0.165, 0.84, 0.44, 1);*/
             }
 
             :host {
-                flex   : 1;
-                margin : 7px;
+                flex: 1;
+                margin: 7px;
             }
 
-            :host .menu-item paper-fab ::content iron-icon {
-                transform: rotate(0deg) !important;
+            :host(.opened) .menu-item {
+                /*transform: scale(1);*/
+                animation: 300ms scale 300ms 1 forwards alternate cubic-bezier(0.165, 0.84, 0.44, 1);
             }
 
-            :host .menu-item {
-                transform  : scale(0);
+            @keyframes scale {
+              0% {
+                  transform: scale(0);
+                  -webkit-transform: scale(0);
+              }
+              100% {
+                  transform: scale(1);
+                  -webkit-transform: scale(1);
+              }
+            }
+
+            @keyframes scaleBack {
+              0% {
+                transform: scale(1);
+                -webkit-transform: scale(1);
+              }
+              100% {
+                transform: scale(0);
+                -webkit-transform: scale(0);
+              }
             }
         </style>
-        <div class="menu-item">
-            <paper-fab id="paperFab" mini icon="{{ icon }}"></paper-fab>
-            <paper-tooltip offset="10" margin-top="0" position="{{ tooltipPosition }}">{{ label }}</paper-tooltip>
+        <div class="menu-item" id="menuItem">
+          <paper-fab id="paperFab" mini icon="{{ icon }}"></paper-fab>
+          <paper-tooltip offset="10" margin-top="0" position="{{ tooltipPosition }}">{{ label }}</paper-tooltip>
         </div>
     </template>
     <script>
         Polymer({
-            is         : 'paper-fab-menu-item',
-            properties : {
-                color : {
-                    type : 'String'
-                },
-                tooltipPosition: {
-                    type: 'String',
-                    value: 'left'
-                }
+            is: 'paper-fab-menu-item',
+            properties: {
+              // Color of the menu item.
+              color: 'String',
+              // The position of rhe tooltop. See paper-tooltip for the api.
+              tooltipPosition: {
+                type: 'String',
+                value: 'left'
+              },
+              // The delay (in ms) before the animation.
+              transitionDelay: Number
             },
-            ready      : function() {
-                if(this.color)
-                    this.$.paperFab.style.backgroundColor = this.color;
-            }
+
+            observers: [
+              '_updateTransitionDelay(transitionDelay)',
+              '_colorChanged(color)'
+            ],
+
+            _updateTransitionDelay: function(transitionDelay) {
+              this.$.menuItem.style.transitionDelay = transitionDelay + 'ms';
+              this.$.menuItem.style.animationDelay = transitionDelay + 'ms';
+            },
+
+            // Called when color has changed.
+            _colorChanged: function(color) {
+              this.customStyle['--paper-fab-background'] = color;
+              this.updateStyles();
+              // For some reason code above do not affect main fab at bootstrap time.
+              this.$.paperFab.style.backgroundColor = color;
+            },
         });
     </script>
 </dom-module>
