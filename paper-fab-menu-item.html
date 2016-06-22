@@ -1,48 +1,33 @@
 <dom-module id="paper-fab-menu-item">
     <template>
         <style is="custom-style">
-            :host .menu-item {
-                position: relative;
-                transition: 100ms all;
-                transform: scale(0);
-                /*animation: 300ms scaleBack 300ms 1 forwards alternate cubic-bezier(0.165, 0.84, 0.44, 1);*/
-            }
+          :host {
+            @apply(--layout-flex);
+            margin: 7px;
+          }
+          .menu-item {
+            position: relative;
+            transition: 100ms all;
+            transform: scale(0);
+          }
+          :host(.opened) .menu-item {
+            /*transform: scale(1);*/
+            display: block;
+            animation: 300ms scale 300ms 1 forwards alternate cubic-bezier(0.165, 0.84, 0.44, 1);
+          }
 
-            :host {
-                flex: 1;
-                margin: 7px;
+          @keyframes scale {
+            0% {
+              transform: scale(0);
             }
-
-            :host(.opened) .menu-item {
-                /*transform: scale(1);*/
-                animation: 300ms scale 300ms 1 forwards alternate cubic-bezier(0.165, 0.84, 0.44, 1);
+            100% {
+              transform: scale(1);
             }
-
-            @keyframes scale {
-              0% {
-                  transform: scale(0);
-                  -webkit-transform: scale(0);
-              }
-              100% {
-                  transform: scale(1);
-                  -webkit-transform: scale(1);
-              }
-            }
-
-            @keyframes scaleBack {
-              0% {
-                transform: scale(1);
-                -webkit-transform: scale(1);
-              }
-              100% {
-                transform: scale(0);
-                -webkit-transform: scale(0);
-              }
-            }
+          }
         </style>
         <div class="menu-item" id="menuItem">
-          <paper-fab id="paperFab" mini icon="{{ icon }}"></paper-fab>
-          <paper-tooltip offset="10" margin-top="0" position="{{ tooltipPosition }}">{{ label }}</paper-tooltip>
+          <paper-fab id="paperFab" mini icon="{{icon}}" label="{{label}}"></paper-fab>
+          <paper-tooltip offset="10" margin-top="0" position="{{tooltipPosition}}">{{tooltip}}</paper-tooltip>
         </div>
     </template>
     <script>
@@ -50,14 +35,18 @@
             is: 'paper-fab-menu-item',
             properties: {
               // Color of the menu item.
-              color: 'String',
+              color: String,
               // The position of rhe tooltop. See paper-tooltip for the api.
               tooltipPosition: {
-                type: 'String',
+                type: String,
                 value: 'left'
               },
-              // The delay (in ms) before the animation.
-              transitionDelay: Number
+              // Tooltip display text
+              tooltip: String,
+              // The delay (in ms) before the entry / exit animation begins.
+              transitionDelay: Number,
+              // Label only used with paper-fab when the icon is not present.
+              label: String
             },
 
             observers: [
