@@ -1,3 +1,10 @@
+<a name="2.0.3"></a>
+## 2.0.3 (2016-08-29)
+
+* New: Added Travis integration ([c93f31a](https://github.com/advanced-rest-client/paper-fab-menu/commit/c93f31a))
+
+
+
 <a name="2.0.2"></a>
 ## 2.0.2 (2016-08-29)
 
