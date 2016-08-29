@@ -1,71 +1,101 @@
+<!--
+@license
+Copyright 2016 Pawel Psztyc, The ARC team
+
+Licensed under the Apache License, Version 2.0 (the "License"); you may not
+use this file except in compliance with the License. You may obtain a copy of
+the License at
+
+http://www.apache.org/licenses/LICENSE-2.0
+
+Unless required by applicable law or agreed to in writing, software
+distributed under the License is distributed on an "AS IS" BASIS, WITHOUT
+WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied. See the
+License for the specific language governing permissions and limitations under
+the License.
+-->
+<link rel="import" href="../polymer/polymer.html">
+<link rel="import" href="../paper-fab/paper-fab.html">
+<link rel="import" href="../paper-tooltip/paper-tooltip.html">
+<link rel="import" href="../iron-flex-layout/classes/iron-flex-layout.html">
+<!--
+The `<paper-fab-menu-item>` is a menu item that can be used with `<paper-fab-menu>`.
+It renders as a mini fab button but it's hidden. The `<paper-fab-menu>` triggers menu items when hovered.
+
+See `<paper-fab-menu>` for more information and demos.
+
+-->
 <dom-module id="paper-fab-menu-item">
-    <template>
-        <style is="custom-style">
-          :host {
-            @apply(--layout-flex);
-            margin: 7px;
-          }
-          .menu-item {
-            position: relative;
-            transition: 100ms all;
-            transform: scale(0);
-          }
-          :host(.opened) .menu-item {
-            /*transform: scale(1);*/
-            display: block;
-            animation: 300ms scale 300ms 1 forwards alternate cubic-bezier(0.165, 0.84, 0.44, 1);
-          }
+  <template>
+    <style is="custom-style">
+    :host {
+      display: block;
+      @apply(--layout-flex);
+      margin: 7px;
+    }
 
-          @keyframes scale {
-            0% {
-              transform: scale(0);
-            }
-            100% {
-              transform: scale(1);
-            }
-          }
-        </style>
-        <div class="menu-item" id="menuItem">
-          <paper-fab id="paperFab" mini icon="{{icon}}" label="{{label}}"></paper-fab>
-          <paper-tooltip animation-delay="2" offset="4" margin-top="0" position="{{tooltipPosition}}">{{tooltip}}</paper-tooltip>
-        </div>
-    </template>
-    <script>
-        Polymer({
-            is: 'paper-fab-menu-item',
-            properties: {
-              // Color of the menu item.
-              color: String,
-              // The position of rhe tooltop. See paper-tooltip for the api.
-              tooltipPosition: {
-                type: String,
-                value: 'left'
-              },
-              // Tooltip display text
-              tooltip: String,
-              // The delay (in ms) before the entry / exit animation begins.
-              transitionDelay: Number,
-              // Label only used with paper-fab when the icon is not present.
-              label: String
-            },
+    .menu-item {
+      position: relative;
+      transition: 100ms all;
+      transform: scale(0);
+    }
 
-            observers: [
-              '_updateTransitionDelay(transitionDelay)',
-              '_colorChanged(color)'
-            ],
+    :host(.opened) .menu-item {
+      /*transform: scale(1);*/
+      display: block;
+      animation: 300ms scale 300ms 1 forwards alternate cubic-bezier(0.165, 0.84, 0.44, 1);
+    }
 
-            _updateTransitionDelay: function(transitionDelay) {
-              this.$.menuItem.style.transitionDelay = transitionDelay + 'ms';
-              this.$.menuItem.style.animationDelay = transitionDelay + 'ms';
-            },
+    @keyframes scale {
+      0% {
+        transform: scale(0);
+      }
+      100% {
+        transform: scale(1);
+      }
+    }
+    </style>
+    <div class="menu-item" id="menuItem">
+      <paper-fab id="paperFab" mini icon="{{icon}}" label="{{label}}"></paper-fab>
+      <paper-tooltip animation-delay="2" offset="4" margin-top="0" position="{{tooltipPosition}}">{{tooltip}}</paper-tooltip>
+    </div>
+  </template>
+  <script>
+  Polymer({
+    is: 'paper-fab-menu-item',
+    properties: {
+      // Color of the menu item.
+      color: String,
+      // The position of rhe tooltop. See paper-tooltip for the api.
+      tooltipPosition: {
+        type: String,
+        value: 'left'
+      },
+      // Tooltip display text
+      tooltip: String,
+      // The delay (in ms) before the entry / exit animation begins.
+      transitionDelay: Number,
+      // Label only used with paper-fab when the icon is not present.
+      label: String
+    },
 
-            // Called when color has changed.
-            _colorChanged: function(color) {
-              this.customStyle['--paper-fab-background'] = color;
-              this.updateStyles();
-              // For some reason code above do not affect main fab at bootstrap time.
-              this.$.paperFab.style.backgroundColor = color;
-            },
-        });
-    </script>
+    observers: [
+      '_updateTransitionDelay(transitionDelay)',
+      '_colorChanged(color)'
+    ],
+
+    _updateTransitionDelay: function(transitionDelay) {
+      this.$.menuItem.style.transitionDelay = transitionDelay + 'ms';
+      this.$.menuItem.style.animationDelay = transitionDelay + 'ms';
+    },
+
+    // Called when color has changed.
+    _colorChanged: function(color) {
+      this.customStyle['--paper-fab-background'] = color;
+      this.updateStyles();
+      // For some reason code above do not affect main fab at bootstrap.
+      this.$.paperFab.style.backgroundColor = color;
+    },
+  });
+  </script>
 </dom-module>
