@@ -135,7 +135,7 @@ Style the menu using `<paper-fab>` variables and mixins.
     ],
 
     ready: function() {
-      this._childobserver = Polymer.dom(this.$.items).observeNodes(function(info) {
+      this._childobserver = Polymer.dom(this.$.items).observeNodes(function() {
         this._updateDelay();
       }.bind(this));
       this.listen(document.body, 'click', '_detectClick');
@@ -219,7 +219,11 @@ Style the menu using `<paper-fab>` variables and mixins.
             return item.nodeName === 'PAPER-FAB-MENU-ITEM';
           });
         }
-        child && opened ? child.classList.add('opened') : child.classList.remove('opened');
+        if (child && opened) {
+          child.classList.add('opened');
+        } else {
+          child.classList.remove('opened');
+        }
       });
     },
 
