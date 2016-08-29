@@ -12,7 +12,7 @@ gulp.task('changelog', function() {
       buffer: false
     })
     .pipe(conventionalChangelog({
-      preset: 'eslint' // Or to any other commit message convention you use.
+      preset: 'auto' // Or to any other commit message convention you use.
     }))
     .pipe(gulp.dest('./'));
 });
