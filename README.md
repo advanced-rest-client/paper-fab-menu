@@ -1,56 +1,32 @@
-
-##&lt;paper-fab-menu&gt;
+# paper-fab-menu
 
 Material design: [Floating Action Button](https://www.google.com/design/spec/components/buttons-floating-action-button.html)
 
-`paper-fab-menu` is a floating action button with menu items. It contains an image placed in the center and
-comes in two sizes: regular size and a smaller size by applying the attribute `mini`. When
-the user touches the button, a ripple effect emanates from the center of the button and expends the menu items it contains.
+A floating action button represents the primary action in an application.
 
-You may import `iron-icons` to use with this element, or provide a URL to a custom icon.
-See `iron-iconset` for more information about how to use a custom icon set.
+Use the `<paper-fab-menu>` to display menu-like fab buttons and to promote actions.
 
-There are two ways to show the paper-fab-button: `vertical` or `horizontal`.
+### Example
 
-[Live Example](http://spacee.xyz/paper-fab-menu/demo.html)
+    <paper-fab-menu color="teal" icon="add" position="vertical">
+      <paper-fab-menu-item color="teal" tooltip="Favorites" icon="star" ></paper-fab-menu-item>
+      <paper-fab-menu-item color="teal" tooltip="Favorites" icon="star" ></paper-fab-menu-item>
+      <paper-fab-menu-item color="teal" tooltip="Favorites" icon="star" ></paper-fab-menu-item>
+    </paper-fab-menu>
 
-##Installing with Bower
+### Icons
+Import your `iron-icons` library and use icons you like.
 
-To install the component with the Bower, just run: 
+    <link rel="import" href="bower_components/iron-icons/iron-icons.html">
+    <paper-fab-menu icon="add"></paper-fab-menu>
 
-`bower install --save paperfabmenu`
+### Styling
+Style the menu using `<paper-fab>` variables and mixins.
 
-Example:
+# paper-fab-menu-item
 
-```html
-<import rel="import" src="bower_components/paper-fab-menu/paper-fab-menu.html" />
+The `<paper-fab-menu-item>` is a menu item that can be used with `<paper-fab-menu>`.
+It renders as a mini fab button but it's hidden. The `<paper-fab-menu>` triggers menu items when hovered.
 
-<paper-fab-menu icon="add" position="vertical">
-	<paper-fab-menu-item label="Polymer" icon="polymer" ></paper-fab-menu-item>
-	<paper-fab-menu-item label="Favorites" icon="star" ></paper-fab-menu-item>
-	<paper-fab-menu-item label="Refresh" icon="refresh" ></paper-fab-menu-item>
-</paper-fab-menu>
-```
-
-### ##&lt;paper-fab-menu&gt; - Properties
-
-The following properties are available for styling:
-
-| Property Name | Description | Default |
-| --- | --- | --- |
-| `icon` | The icon of the main paper-button | `''` |
-| `color` | The background color of the main paper button | `--accent-color` |
-| `position` | The position of the items: `vertical` or `horizontal` | `vertical` |
-
-### ##&lt;paper-fab-menu-item&gt; - Properties
-
-The following properties are available for styling:
-
-| Property Name | Description | Default |
-| --- | --- | --- |
-| `icon` | The icon of the paper menu item | `''` |
-| `color` | The background color of the paper menu item | `--accent-color` |
-| `label` | The tooltip label of the paper menu item | `''` |
-| `tooltip-position` | The position of the tooltip | `left` |
-
+See `<paper-fab-menu>` for more information and demos.
 
