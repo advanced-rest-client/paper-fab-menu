@@ -1,3 +1,13 @@
+<a name="2.0.4"></a>
+## [2.0.4](https://github.com/advanced-rest-client/paper-fab-menu/compare/2.0.3...v2.0.4) (2016-09-29)
+
+
+### Update
+
+* Updated docs ([e8b8071d6611ddadc67f2147eb82804162861724](https://github.com/advanced-rest-client/paper-fab-menu/commit/e8b8071d6611ddadc67f2147eb82804162861724))
+
+
+
 <a name="2.0.3"></a>
 ## 2.0.3 (2016-08-29)
 
