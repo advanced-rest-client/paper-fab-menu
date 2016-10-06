@@ -1,3 +1,14 @@
+<a name="2.0.5"></a>
+## [2.0.5](https://github.com/advanced-rest-client/paper-fab-menu/compare/2.0.4...v2.0.5) (2016-10-06)
+
+
+### New
+
+* Added dependencyci ([cd8db50d8f1b0bee4a98196e818c3c39c7011e91](https://github.com/advanced-rest-client/paper-fab-menu/commit/cd8db50d8f1b0bee4a98196e818c3c39c7011e91))
+* Added hero image ([215a330e7542d768c7b61b2dad5d73270c5fc1c4](https://github.com/advanced-rest-client/paper-fab-menu/commit/215a330e7542d768c7b61b2dad5d73270c5fc1c4))
+
+
+
 <a name="2.0.4"></a>
 ## [2.0.4](https://github.com/advanced-rest-client/paper-fab-menu/compare/2.0.3...v2.0.4) (2016-09-29)
 
