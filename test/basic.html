@@ -27,7 +27,7 @@ subject to an additional IP rights grant found at http://polymer.github.io/PATEN
 
   <test-fixture id="simple">
     <template>
-      <paper-fab-menu id="fab1" icon="add" position="vertical"></paper-fab-menu>
+      <paper-fab-menu id="fab1" icon="add"></paper-fab-menu>
     </template>
   </test-fixture>
 
@@ -38,6 +38,7 @@ subject to an additional IP rights grant found at http://polymer.github.io/PATEN
   </test-fixture>
 
   <script>
+  /* global fixture, expect */
   suite('<paper-fab-menu>', function() {
     var f1;
     var el1;
@@ -47,19 +48,9 @@ subject to an additional IP rights grant found at http://polymer.github.io/PATEN
       el1 = f1.$$('.paper-fab-menu-container');
       f2 = fixture('opened');
     });
-    test('applies styles specified by the `position` attribute', function() {
-      var s = window.getComputedStyle(el1);
-      assert.equal(s.flexDirection, 'column');
-    });
-    test('changes styles after `position` attribute change', function() {
-      f1.position = 'horizontal';
-      var s = window.getComputedStyle(el1);
-      assert.equal(s.flexDirection, 'row');
-    });
-    test('openes the element', function() {
 
+    test('openes the element', function() {
       f2.open();
-      console.log('f2.opened', f2.opened);
       var elm = f2.$$('#paperFab');
       expect(elm.customStyle).to.have.property('--paper-fab-iron-icon');
       expect(elm.customStyle['--paper-fab-iron-icon']).to.contain('rotate(45deg)');

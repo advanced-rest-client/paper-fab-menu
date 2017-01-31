@@ -1,3 +1,14 @@
+<a name="2.0.6"></a>
+## [2.0.6](https://github.com/advanced-rest-client/paper-fab-menu/compare/2.0.5...v2.0.6) (2017-01-31)
+
+
+### Update
+
+* Added new Travis configuration ([8fa90aae250584ad0e17ded91c82a7658a4731d2](https://github.com/advanced-rest-client/paper-fab-menu/commit/8fa90aae250584ad0e17ded91c82a7658a4731d2))
+* removed vertical position, fixed an issue where it was possible to click on element when it was hidden ([6d09e394fc5287bb1bdb56ad45e94e4d6302f269](https://github.com/advanced-rest-client/paper-fab-menu/commit/6d09e394fc5287bb1bdb56ad45e94e4d6302f269))
+
+
+
 <a name="2.0.5"></a>
 ## [2.0.5](https://github.com/advanced-rest-client/paper-fab-menu/compare/2.0.4...v2.0.5) (2016-10-06)
 

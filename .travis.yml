@@ -1,18 +1,26 @@
 language: node_js
 sudo: required
-before_script:
-- npm install -g bower polylint web-component-tester
-- bower install
-- polylint
+dist: trusty
 node_js: stable
+before_script:
+- npm install --silent bower polymer-cli
+- node_modules/.bin/bower install --silent
 addons:
-  firefox: '46.0'
-  apt:
-    sources:
-    - google-chrome
-    packages:
-    - google-chrome-stable
   sauce_connect: true
 script:
-- xvfb-run wct
-dist: trusty
+- node_modules/.bin/polymer lint paper-fab-menu.html
+- node_modules/.bin/polymer test --plugin sauce --job-name "paper-fab-menu:${TRAVIS_BRANCH}" --build-number=${TRAVIS_BUILD_NUMBER}
+cache:
+  directories:
+  - bower_components
+  - node_modules
+branches:
+  only:
+    - stage
+    - develop
+after_success:
+  - node tasks/ci.js
+env:
+  global:
+  - secure: az0Oz33T5Amk6jYVJG/WwKJsEWfZj/yMjkkTgh/ilaNln54kjcUVmNnVzMV70dB/vmYdO2eZH7RZITha2qGmt+qraIVWo4Ozab+jnhzdoFkN1F5QL6yxvaFiomFPVLuJaaOzozUeVRNUdWGb6zoMOI7vjlnMTs8D5iIJfe6Ud0fGb/wRj4jXiqKmqpkM0gHysuysCIw+RipQdpACP46nU7NnpqcNGRUB4CrsxKuIrSKIMO9vxgUHYlXdRloH4erNpjcvjCN3e10G3BaSXmwXVQYWj4STljUGXwfPabrir2zXCfpAwDAQWpU7dWGoJQnvbNs5wcNkIFAVBcppAgJcVlBAKgH5YegXSSV3kVbs2Tx4WtQpHrE7tymOHmMdl6x5mn1uO5QO/CIdZQ8121Bm3V4XI/97Hzo74EqeQkvltM8z8uxIM5xN9hGKU9nXk5w3gRKwjgyUpywPMEx92T6kQna6jQFH2h3EsfqHRHgOyL/0Vsg+s2Q2xMlB8/Rk8UfqtNDihsivr83gOFjODSusFE1qrBPdYpEH3BFwD/zY+yVEgsJ0IqtESte+/WvuQTLaY3oyWj6cneVBOoWKaQLmPKZD0vFcN2GZodE4hhsL8d2jVM5rr4b9Hv0kNDEfgoYbH7zVZv3NSft8fdLmLX8qSqWslMUZ7kEW+sI+OzRkXFk=
+  - secure: fTsFaHIjUwX6w+eWsDsD5MhijThmsUCgQ14vbhiZyoel4EdEJ5Hlz2psW9m9mtax2/W5Siolw2lTgXjatC+o/TCPAQZ6y+AxXxpGXPr6xmlxma9ZC2espmWQSDeokJjQSCQ2Z3gi8s4/B0YhCGJ4FAFIssB6etQwc+aP0n2ahxcH6OjhRV454Nye1TRdNd+ba3zK7UGvoyBL8FAtXFIdzKSS6tGMFjpQUemXEiH8JtaoJieUEQL3Z4EOik6BPsD0ISXOpMzUXvLFnZHVLxAjHPQr2EFXHogtsZpe4OwMg7mbx34l6qefos5y5oidy/3mnsMV7e3U2R9mMPker9i7dJ2+hcqIDIgofB2xNun6utfBK7tCVTIDVx9znlrwzeSgdIPiNC0JR/r+Q9YezjTHx3A1gD+5QEQVbWcSpePSIu91woDiykQDd+n9+tCYctRvw0FApARN7JTVmdbvXZtDjigiqy8XnSs6MdNC/7ck0u8G42ZgJ7FW+NYCvBtV963VnQuGQqq328EqGWhEdWhSw3RJ2YFVUgfLFNW3v7Z41Tiqg9ISKZ8V23r8EystQH0evpBTdwHMOjZfeztjy2/Sa65G5h4qnUs1arjuYGWuMpE64P20JHOT6O9cS5n/YRSylG2BId5C2RLelI8ZVGxLUbHnIZVpn4PITpsyHPkgRM0=
