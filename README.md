@@ -1,3 +1,5 @@
+[![Build Status](https://travis-ci.org/advanced-rest-client/paper-fab-menu.svg?branch=stage)](https://travis-ci.org/advanced-rest-client/paper-fab-menu)  
+
 # paper-fab-menu
 
 Material design: [Floating Action Button](https://www.google.com/design/spec/components/buttons-floating-action-button.html)
@@ -8,10 +10,10 @@ Use the `<paper-fab-menu>` to display menu-like fab buttons and to promote actio
 
 ### Example
 
-    <paper-fab-menu color="teal" icon="add" position="vertical">
-      <paper-fab-menu-item color="teal" tooltip="Favorites" icon="star" ></paper-fab-menu-item>
-      <paper-fab-menu-item color="teal" tooltip="Favorites" icon="star" ></paper-fab-menu-item>
-      <paper-fab-menu-item color="teal" tooltip="Favorites" icon="star" ></paper-fab-menu-item>
+    <paper-fab-menu color="teal" icon="add">
+      <paper-fab-menu-item color="teal" tooltip="Favorites" icon="star"></paper-fab-menu-item>
+      <paper-fab-menu-item color="teal" tooltip="Favorites" icon="star"></paper-fab-menu-item>
+      <paper-fab-menu-item color="teal" tooltip="Favorites" icon="star"></paper-fab-menu-item>
     </paper-fab-menu>
 
 ### Icons
