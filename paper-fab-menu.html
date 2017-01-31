@@ -15,10 +15,8 @@ License for the specific language governing permissions and limitations under
 the License.
 -->
 <link rel="import" href="../polymer/polymer.html">
-<!-- <link rel="import" href="../iron-icons/iron-icons.html"> -->
 <link rel="import" href="../paper-fab/paper-fab.html">
-<link rel="import" href="../paper-tooltip/paper-tooltip.html">
-<link rel="import" href="../iron-flex-layout/classes/iron-flex-layout.html">
+<link rel="import" href="../iron-flex-layout/iron-flex-layout.html">
 <link rel="import" href="paper-fab-menu-item.html">
 <!--
 Material design: [Floating Action Button](https://www.google.com/design/spec/components/buttons-floating-action-button.html)
@@ -29,10 +27,10 @@ Use the `<paper-fab-menu>` to display menu-like fab buttons and to promote actio
 
 ### Example
 
-    <paper-fab-menu color="teal" icon="add" position="vertical">
-      <paper-fab-menu-item color="teal" tooltip="Favorites" icon="star" ></paper-fab-menu-item>
-      <paper-fab-menu-item color="teal" tooltip="Favorites" icon="star" ></paper-fab-menu-item>
-      <paper-fab-menu-item color="teal" tooltip="Favorites" icon="star" ></paper-fab-menu-item>
+    <paper-fab-menu color="teal" icon="add">
+      <paper-fab-menu-item color="teal" tooltip="Favorites" icon="star"></paper-fab-menu-item>
+      <paper-fab-menu-item color="teal" tooltip="Favorites" icon="star"></paper-fab-menu-item>
+      <paper-fab-menu-item color="teal" tooltip="Favorites" icon="star"></paper-fab-menu-item>
     </paper-fab-menu>
 
 ### Icons
@@ -50,52 +48,56 @@ Style the menu using `<paper-fab>` variables and mixins.
 @hero hero.svg
 -->
 <dom-module id="paper-fab-menu">
-  <style is="custom-style">
-  :host {
-    width: 60px;
-  }
-
-  :host([position="vertical"]) .menu-fab-button {
-    padding-top: 7px;
-  }
-
-  :host([position="horizontal"]) .menu-fab-button {
-    padding-left: 7px;
-  }
-
-  :host-context([dir="rtl"]):host([position="horizontal"]) .menu-fab-button,
-  :host-context([dir="rtl"])[position="horizontal"] .menu-fab-button,
-  /* Polymer workaround */
-
-  :host([dir="rtl"][position="horizontal"]) .menu-fab-button {
-    padding-left: 0;
-    padding-right: 7px;
-  }
-
-  :host .menu-items::content a {
-    display: block;
-    margin: 7px;
-  }
-
-  :host .menu-items::content a> paper-fab-menu-item {
-    margin: 0;
-  }
-
-  :host .menu-items {
-    order: 1;
-  }
-
-  :host .menu-fab-button {
-    order: 2;
-  }
-  </style>
   <template>
-    <div class$="layout {{position}} paper-fab-menu-container">
-      <div id="mainFab" class="menu-fab-button layout vertical self-center">
-        <paper-fab id="paperFab" icon="{{icon}}"></paper-fab>
-      </div>
-      <div id="mainItems" class$="menu-items flex layout {{position}} self-center">
+    <style>
+    :host {
+      width: 60px;
+    }
+
+    .menu-fab-button {
+      padding-top: 8px;
+    }
+
+    :host #mainItems::content a {
+      display: block;
+      margin: 8px;
+    }
+
+    :host #mainItems::content a>paper-fab-menu-item {
+      margin: 0;
+    }
+
+    #mainItems {
+      @apply(--layout-vertical);
+      @apply(--layout-flex);
+      @apply(--layout-self-center);
+      -webkit-flex-basis: 0%;
+      flex-basis: 0%;
+    }
+
+    #mainItems.fix-safari {
+      flex-basis: auto;
+    }
+
+    .menu-fab-button {
+      @apply(--layout-vertical);
+      @apply(--layout-self-center);
+    }
+
+    .paper-fab-menu-container {
+      @apply(--layout-vertical);
+    }
+
+    :host(:not([children-visible])) #mainItems {
+      display: none;
+    }
+    </style>
+    <div class="paper-fab-menu-container">
+      <div id="mainItems" class$="[[_computeContentClass(safari)]]">
         <content id="items" select="a, paper-fab-menu-item"></content>
+      </div>
+      <div id="mainFab" class="menu-fab-button">
+        <paper-fab id="paperFab" icon="[[icon]]"></paper-fab>
       </div>
     </div>
   </template>
@@ -121,15 +123,30 @@ Style the menu using `<paper-fab>` variables and mixins.
        */
       color: String,
       // The icon to render. It's binded to `paper-fab`'s icon property.
-      icon: String
+      icon: String,
+      /**
+       * Computed value of the delay time when the list child is
+       * opened / closed.
+       */
+      _delayTime: Number,
+      // If true then the children container is displayed.
+      childrenVisible: {
+        type: Boolean,
+        readOnly: true,
+        reflectToAttribute: true
+      },
+      // Tru if it's a Safari which need a fix...
+      safari: {
+        type: Boolean,
+        value: function() {
+          var ua = navigator.userAgent.toLowerCase();
+          return ua.indexOf('safari') !== -1 && ua.indexOf('chrome') === -1;
+        }
+      }
     },
     listeners: {
       'mouseover': '_testOpen',
-      'mouseout': '_testClose',
-      'mainFab.mouseover': '_testOpen',
-      'mainFab.mouseout': '_testClose',
-      'mainItems.mouseover': '_testOpen',
-      'mainItems.mouseout': '_testClose'
+      'mouseout': '_testClose'
     },
 
     observers: [
@@ -138,9 +155,8 @@ Style the menu using `<paper-fab>` variables and mixins.
     ],
 
     ready: function() {
-      this._childobserver = Polymer.dom(this.$.items).observeNodes(function() {
-        this._updateDelay();
-      }.bind(this));
+      // this._childobserver = Polymer.dom(this.$.items)
+      //   .observeNodes(this._updateDelay.bind(this));
       this.listen(document.body, 'click', '_detectClick');
     },
 
@@ -165,46 +181,20 @@ Style the menu using `<paper-fab>` variables and mixins.
     },
 
     // Tests if the menu should be opened and opens it if nescesary
-    _testOpen: function(e) {
+    _testOpen: function() {
+      this.cancelDebouncer('close-fab');
       if (this.opened) {
         return;
       }
-      if (e.path[0].classList.contains('paper-fab-menu-container')) {
-        return;
-      }
-      let isMain = true;
-      for (let i = 0, len = e.path.length; i < len; i++) {
-        let item = e.path[i];
-        if (!item.classList) {
-          continue;
-        }
-        if (item.classList.contains('menu-items') ||
-          item.nodeName === 'PAPER-FAB-MENU-ITEM') {
-          isMain = false;
-          break;
-        }
-      }
-      if (isMain) {
-        this.opened = true;
-      }
+      this.opened = true;
     },
 
     // Tests if the menu should be closed and closes it if nescesary
-    _testClose: function(e) {
-      if (!this.opened) {
-        return;
-      }
-      var item = e.path[0];
-      if (item && item.classList && item.classList.contains('paper-fab-menu-container')) {
+    _testClose: function() {
+      this.debounce('close-fab', function() {
         this.opened = false;
-        return;
-      } else if (item.id === 'tooltip') {
-        this.opened = false;
-        return;
-      } else if (item.id === 'paperFab' && e.path[1].id === 'mainFab') {
-        this.opened = false;
-        return;
-      }
+        this._closeDebounce = undefined;
+      }, 20);
     },
 
     // Opens or closes the menu depending on the argument.
@@ -213,21 +203,25 @@ Style the menu using `<paper-fab>` variables and mixins.
       style += opened ? '45' : '0';
       this.$.paperFab.customStyle['--paper-fab-iron-icon'] = style + 'deg);';
       this.$.paperFab.updateStyles();
-      Polymer.dom(this).children.forEach(function(child) {
-        if (child.nodeName === 'A') {
-          if (!child.children) {
-            return;
-          }
-          child = Array.from(child.children).find(function(item) {
-            return item.nodeName === 'PAPER-FAB-MENU-ITEM';
-          });
-        }
-        if (child && opened) {
-          child.classList.add('opened');
-        } else {
-          child.classList.remove('opened');
-        }
-      });
+
+      var children = Polymer.dom(this).children;
+      if (!opened) {
+        children.reverse();
+        this._updateDelay(children, opened);
+      } else {
+        this._updateDelay(children, opened);
+        this._setChildrenVisible(true);
+      }
+      this.async(function() {
+        // Propagate style change
+        this._updateChildrenState(children, opened);
+      }, 1);
+
+      if (!opened) {
+        this.async(function() {
+          this._setChildrenVisible(false);
+        }, this._delayTime + 1);
+      }
     },
 
     // Called when color has changed.
@@ -238,28 +232,92 @@ Style the menu using `<paper-fab>` variables and mixins.
       this.$.paperFab.style.backgroundColor = color;
     },
 
-    // Updates animation delay time attribute in distributed children.
-    _updateDelay: function() {
-      var time = 0;
-      Polymer.dom(this).children.reverse().forEach(function(child) {
-        child.transitionDelay = time;
-        time += 50;
-      });
+    /**
+     * Changes children opened state
+     */
+    _updateChildrenState: function(children, opened) {
+      children.forEach(function(child) {
+        child = this.__ensureMenuItem(child);
+        if (!child) {
+          return;
+        }
+        if (child && opened) {
+          child.opened = true;
+        } else {
+          child.opened = false;
+        }
+      }, this);
     },
 
-    // Closes menu on body click.
+    // Updates animation delay time attribute in distributed children.
+    _updateDelay: function(children) {
+      var time = 0;
+      for (var i = children.length - 1; i >= 0; i--) {
+        var child = this.__ensureMenuItem(children[i]);
+        if (!child) {
+          continue;
+        }
+        child.transitionDelay = time;
+        time += 50;
+      }
+      this._delayTime = time;
+    },
+    /**
+     * Ensures that the node is the `paper-fab-menu-item`. If the element
+     * is an anchor then it will look in the children.
+     * If the `paper-fab-menu-item` this function returns null;
+     *
+     * @param {HTMLElement} node Current node.
+     * @return A menu item or null if not found.
+     */
+    __ensureMenuItem: function(node) {
+      if (!node || !node.nodeName) {
+        return null;
+      }
+      if (node.nodeName === 'A') {
+        if (!node.children) {
+          return;
+        }
+        var found = false;
+        for (var i = 0, len = node.children.length; i < len; i++) {
+          var _ = node.children[i];
+          if (_ && _.nodeName && _.nodeName === 'PAPER-FAB-MENU-ITEM') {
+            node = _;
+            found = true;
+            break;
+          }
+        }
+        if (!found) {
+          return null;
+        }
+      }
+      return node;
+    },
+
+    // Closes menu on body click - outside this control.
     _detectClick: function(e) {
-      var ctrl = this;
-      var isMainButton = e.path.some(function(item) {
-        return item === ctrl;
-      });
+      if (!e.path || !e.path.length) {
+        return;
+      }
+      var isMainButton = false;
+      for (var i = 0, len = e.path.length; i < len; i++) {
+        if (e.path[i] === this) {
+          isMainButton = true;
+        }
+      }
       if (isMainButton) {
         if (!this.opened) {
           this.opened = true;
         }
         return;
       }
-      this.opened = false;
+      if (this.opened) {
+        this.opened = false;
+      }
+    },
+
+    _computeContentClass: function(safari) {
+      return safari ? 'fix-safari' : '';
     }
   });
   </script>
