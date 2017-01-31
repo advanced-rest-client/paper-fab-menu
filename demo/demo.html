@@ -25,7 +25,7 @@
   :root {
     --demo-snippet-demo: {
       position: relative;
-      min-height: 120px;
+      min-height: 180px;
     }
   }
   html,
@@ -33,15 +33,9 @@
     overflow: auto;
   }
 
-  paper-fab-menu[position="vertical"] {
+  paper-fab-menu {
     position: absolute;
     right: 20px;
-    bottom: 20px;
-  }
-
-  paper-fab-menu[position="horizontal"] {
-    position: absolute;
-    right: 185px;
     bottom: 20px;
   }
 
@@ -56,21 +50,28 @@
 
   <div class="vertical-section-container content">
 
-    <h3>Horizontal mode</h3>
-    <demo-snippet >
+    <h3>Right positioned</h3>
+    <demo-snippet>
       <template>
-        <paper-fab-menu color="#2196F3" icon="add" position="horizontal">
-          <paper-fab-menu-item tooltip-position="top" color="red" tooltip="Polymer" icon="polymer"></paper-fab-menu-item>
-          <paper-fab-menu-item tooltip-position="top" color="#9C27B0" tooltip="Favorites" icon="star"></paper-fab-menu-item>
-          <paper-fab-menu-item tooltip-position="top" color="#2196F3" tooltip="Refresh" icon="refresh"></paper-fab-menu-item>
+        <paper-fab-menu color="#2196F3" icon="add" class="left">
+          <paper-fab-menu-item tooltip-position="right" color="red" tooltip="Polymer" icon="polymer"></paper-fab-menu-item>
+          <paper-fab-menu-item tooltip-position="right" color="#9C27B0" tooltip="Favorites" icon="star"></paper-fab-menu-item>
+          <paper-fab-menu-item tooltip-position="right" color="#2196F3" tooltip="Refresh" icon="refresh"></paper-fab-menu-item>
         </paper-fab-menu>
+        <style>
+          paper-fab-menu.left {
+            position: absolute;
+            left: 20px;
+            bottom: 20px;
+          }
+        </style>
       </template>
     </demo-snippet>
 
-    <h3>Vertical mode</h3>
+    <h3>Left positioned</h3>
     <demo-snippet>
       <template>
-        <paper-fab-menu icon="add" position="vertical">
+        <paper-fab-menu icon="add">
           <paper-fab-menu-item tooltip="Polymer" icon="polymer"></paper-fab-menu-item>
           <paper-fab-menu-item tooltip="Favorites" icon="star"></paper-fab-menu-item>
           <paper-fab-menu-item tooltip="Refresh" icon="refresh"></paper-fab-menu-item>
@@ -82,7 +83,7 @@
     <h3>Links menu items</h3>
     <demo-snippet>
       <template>
-        <paper-fab-menu icon="add" position="vertical">
+        <paper-fab-menu icon="add">
           <a target="_blank" href="http://spacee.xyz">
             <paper-fab-menu-item tooltip="Polymer" icon="polymer"></paper-fab-menu-item>
           </a>
