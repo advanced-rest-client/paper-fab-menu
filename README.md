@@ -1,34 +1,26 @@
-[![Build Status](https://travis-ci.org/advanced-rest-client/paper-fab-menu.svg?branch=stage)](https://travis-ci.org/advanced-rest-client/paper-fab-menu)  
+[![Build Status](https://travis-ci.org/advanced-rest-client/api-url-data-model.svg?branch=stage)](https://travis-ci.org/advanced-rest-client/paper-fab-menu)
+
+[![Published on webcomponents.org](https://img.shields.io/badge/webcomponents.org-published-blue.svg)](https://www.webcomponents.org/element/advanced-rest-client/paper-fab-menu)
 
 # paper-fab-menu
 
-Material design: [Floating Action Button](https://www.google.com/design/spec/components/buttons-floating-action-button.html)
+A material design floating action button with menu items for Polymer 1.0
 
-A floating action button represents the primary action in an application.
+<!---
+```
+<custom-element-demo>
+  <template>
+    <link rel="import" href="paper-fab-menu.html">
+    <next-code-block></next-code-block>
+  </template>
+</custom-element-demo>
+```
+-->
 
-Use the `<paper-fab-menu>` to display menu-like fab buttons and to promote actions.
+```html
+<paper-fab-menu></paper-fab-menu>
+```
 
-### Example
+### API components
 
-    <paper-fab-menu color="teal" icon="add">
-      <paper-fab-menu-item color="teal" tooltip="Favorites" icon="star"></paper-fab-menu-item>
-      <paper-fab-menu-item color="teal" tooltip="Favorites" icon="star"></paper-fab-menu-item>
-      <paper-fab-menu-item color="teal" tooltip="Favorites" icon="star"></paper-fab-menu-item>
-    </paper-fab-menu>
-
-### Icons
-Import your `iron-icons` library and use icons you like.
-
-    <link rel="import" href="bower_components/iron-icons/iron-icons.html">
-    <paper-fab-menu icon="add"></paper-fab-menu>
-
-### Styling
-Style the menu using `<paper-fab>` variables and mixins.
-
-# paper-fab-menu-item
-
-The `<paper-fab-menu-item>` is a menu item that can be used with `<paper-fab-menu>`.
-It renders as a mini fab button but it's hidden. The `<paper-fab-menu>` triggers menu items when hovered.
-
-See `<paper-fab-menu>` for more information and demos.
-
+This components is a part of API components ecosystem: https://elements.advancedrestclient.com/

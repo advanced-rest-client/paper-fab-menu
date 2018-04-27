@@ -1,0 +1,37 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, minimum-scale=1, initial-scale=1, user-scalable=yes">
+  <title>paper-fab-menu test</title>
+  <script src="../../webcomponentsjs/webcomponents-loader.js"></script>
+  <script src="../../web-component-tester/browser.js"></script>
+  <link rel="import" href="../paper-fab-menu.html">
+  <link rel="import" href="../paper-fab-menu-item.html">
+</head>
+<body>
+  <test-fixture id="Simple">
+    <template>
+      <paper-fab-menu icon="add">
+        <paper-fab-menu-item tooltip-position="right" color="red" tooltip="Polymer" icon="polymer"></paper-fab-menu-item>
+        <paper-fab-menu-item tooltip-position="right" color="#9C27B0" tooltip="Favorites" icon="star"></paper-fab-menu-item>
+      </paper-fab-menu>
+    </template>
+  </test-fixture>
+
+  <script>
+  suite('paper-fab-menu', () => {
+
+    test('Children are hidden', (done) => {
+      const element = fixture('Simple');
+      flush(() => {
+        const nodes = element.querySelectorAll('paper-fab-menu-item');
+        const container = nodes[0].shadowRoot.querySelector('.menu-item');
+        assert.equal(container.className.indexOf('opened'), -1);
+        done();
+      });
+    });
+  });
+  </script>
+</body>
+</html>
