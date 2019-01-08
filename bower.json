@@ -1,7 +1,7 @@
 {
   "name": "paper-fab-menu",
   "description": "A material design floating action button with menu items",
-  "version": "3.0.0-preview",
+  "version": "3.0.0",
   "license": "Apache-2.0",
   "authors": [
     "Pawel Psztyc",
