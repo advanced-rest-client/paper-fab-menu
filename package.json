@@ -1,5 +1,5 @@
 {
-  "name": "@arc-components/paper-fab-menu",
+  "name": "@advanced-rest-client/paper-fab-menu",
   "description": "A material design floating action button with menu items",
   "version": "3.0.0-preview",
   "license": "Apache-2.0",
@@ -19,7 +19,7 @@
     "url": "git://github.com/advanced-rest-client/paper-fab-menu.git"
   },
   "devDependencies": {
-    "@polymer/gen-typescript-declarations": "^1.1.1"
+    "@polymer/gen-typescript-declarations": "^1.6.0"
   },
   "private": false,
   "main": "paper-fab-menu.html"
