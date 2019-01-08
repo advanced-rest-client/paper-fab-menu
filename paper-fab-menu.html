@@ -15,6 +15,7 @@ License for the specific language governing permissions and limitations under
 the License.
 -->
 <link rel="import" href="../polymer/polymer-element.html">
+<link rel="import" href="../polymer/lib/utils/render-status.html">
 <link rel="import" href="../paper-fab/paper-fab.html">
 <link rel="import" href="../iron-flex-layout/iron-flex-layout.html">
 <link rel="import" href="paper-fab-menu-item.html">
@@ -89,7 +90,8 @@ the License.
   </template>
   <script>
   /**
-   * Material design: [Floating Action Button](https://www.google.com/design/spec/components/buttons-floating-action-button.html)
+   * Material design:
+   * [Floating Action Button](https://www.google.com/design/spec/components/buttons-floating-action-button.html)
    *
    * A floating action button represents the primary action in an application.
    *
@@ -123,16 +125,11 @@ the License.
    * @memberof UiElements
    */
   class PaperFabMenu extends Polymer.Element {
-    static get is() { return 'paper-fab-menu'; }
+    static get is() {
+      return 'paper-fab-menu';
+    }
     static get properties() {
       return {
-        /**
-         * Vertical or horizontal position of the menu.
-         */
-        position: {
-          type: String,
-          value: 'vertical'
-        },
         // True when the menu is opened.
         opened: {
           type: Number,
@@ -164,7 +161,7 @@ the License.
         safari: {
           type: Boolean,
           value: function() {
-            var ua = navigator.userAgent.toLowerCase();
+            const ua = navigator.userAgent.toLowerCase();
             return ua.indexOf('safari') !== -1 && ua.indexOf('chrome') === -1;
           }
         }
@@ -197,19 +194,22 @@ the License.
       this.opened = !this.opened;
     }
 
-    // Tests if the menu should be opened and opens it if nescesary
+    /**
+     * Tests if the menu should be opened and opens it if nescesary.
+     */
     _testOpen() {
       if (this.__closingDebouncer) {
         clearTimeout(this.__closingDebouncer);
         this.__closingDebouncer = undefined;
       }
-      if (this.opened) {
-        return;
+      if (!this.opened) {
+        this.opened = true;
       }
-      this.opened = true;
     }
 
-    // Tests if the menu should be closed and closes it if nescesary
+    /**
+     * Tests if the menu should be closed and closes it if nescesary
+     */
     _testClose() {
       if (this.__closingDebouncer) {
         return;
@@ -220,7 +220,10 @@ the License.
       }, 20);
     }
 
-    // Opens or closes the menu depending on the argument.
+    /**
+     * Renders the mennu opened / closed
+     * @param {Boolean} opened Current menu state
+     */
     _openedChanged(opened) {
       const children = Array.from(this.shadowRoot.querySelector('slot').assignedNodes());
       if (!opened) {
@@ -230,9 +233,10 @@ the License.
         this._updateDelay(children, opened);
         this._setChildrenVisible(true);
       }
-      setTimeout(() => {
+
+      Polymer.RenderStatus.afterNextRender(this, () => {
         this._updateChildrenState(children, opened);
-      }, 1);
+      });
 
       if (!opened) {
         setTimeout(() => {
@@ -243,6 +247,8 @@ the License.
 
     /**
      * Changes children opened state
+     * @param {Array<Element>} children
+     * @param {Boolean} opened
      */
     _updateChildrenState(children, opened) {
       children.forEach((child) => {
@@ -258,7 +264,10 @@ the License.
       });
     }
 
-    // Updates animation delay time attribute in distributed children.
+    /**
+     * Updates animation delay time attribute in distributed children.
+     * @param {Array<Element>} children
+     */
     _updateDelay(children) {
       let time = 0;
       for (let i = children.length - 1; i >= 0; i--) {
@@ -276,8 +285,8 @@ the License.
      * is an anchor then it will look in the children.
      * If the `paper-fab-menu-item` this function returns null;
      *
-     * @param {HTMLElement} node Current node.
-     * @return A menu item or null if not found.
+     * @param {Element} node Current node.
+     * @return {Element} A menu item or null if not found.
      */
     __ensureMenuItem(node) {
       if (!node || !node.nodeName) {
@@ -297,13 +306,16 @@ the License.
           }
         }
         if (!found) {
-          return null;
+          return;
         }
       }
       return node;
     }
 
-    // Called when color has changed.
+    /**
+     * Called when color has changed.
+     * @param {String} color Color to set on the fab.
+     */
     _colorChanged(color) {
       this.updateStyles({
         '--paper-fab-background': color
@@ -312,14 +324,21 @@ the License.
       this.$.paperFab.style.backgroundColor = color;
     }
 
-    // Closes menu on body click - outside this control.
+    /**
+     * Closes menu when click is detected outside this control.
+     * @param {MouseEvent} e
+     */
     _detectClick(e) {
-      if (!e.path || !e.path.length) {
+      let path = e.path;
+      if (!path && e.composedPath) {
+        path = e.composedPath();
+      }
+      if (!path || !path.length) {
         return;
       }
       let isMainButton = false;
-      for (let i = 0, len = e.path.length; i < len; i++) {
-        if (e.path[i] === this) {
+      for (let i = 0, len = path.length; i < len; i++) {
+        if (path[i] === this) {
           isMainButton = true;
         }
       }
