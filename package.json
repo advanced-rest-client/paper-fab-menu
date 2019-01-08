@@ -1,25 +1,25 @@
 {
-  "name": "paper-fab-menu",
-  "version": "2.0.6",
+  "name": "@advanced-rest-client/paper-fab-menu",
+  "description": "A material design floating action button with menu items",
+  "version": "3.0.0",
   "license": "Apache-2.0",
-  "description": "A material design floating action button with menu items for Polymer 1.0",
+  "authors": [
+    "Pawel Psztyc",
+    "The Advanced REST Client authors"
+  ],
   "scripts": {
-    "serve": "node_modules/.bin/polymer serve",
-    "lint": "node_modules/.bin/polymer lint paper-fab-menu.html paper-fab-menu-item.html",
-    "test-sauce": "node_modules/.bin/polymer test --plugin sauce --job-name \"paper-fab-menu:local-test\"",
-    "test": "node_modules/.bin/polymer test",
-    "deps": "npm install --quiet && bower install --quiet",
-    "update-deps": "npm update --quiet && bower update --quiet"
+    "lint": "polymer lint paper-fab-menu.html",
+    "test-sauce": "polymer test --plugin sauce --job-name \"paper-fab-menu:local-test\"",
+    "test": "polymer test --plugin local",
+    "update-deps": "npm update --quiet && bower update --quiet",
+    "update-types": "gen-typescript-declarations --deleteExisting --outDir ."
   },
   "repository": {
     "type": "git",
     "url": "git://github.com/advanced-rest-client/paper-fab-menu.git"
   },
   "devDependencies": {
-    "polymer-cli": "^0.17.0"
-  },
-  "engines": {
-    "node": ">=0.10.0"
+    "@polymer/gen-typescript-declarations": "^1.6.0"
   },
   "private": false,
   "main": "paper-fab-menu.html"
