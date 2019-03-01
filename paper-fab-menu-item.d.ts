@@ -5,16 +5,16 @@
  *   https://github.com/Polymer/tools/tree/master/packages/gen-typescript-declarations
  *
  * To modify these typings, edit the source file(s):
- *   paper-fab-menu-item.html
+ *   paper-fab-menu-item.js
  */
 
 
 // tslint:disable:variable-name Describing an API that's defined elsewhere.
 // tslint:disable:no-any describes the API as best we are able today
 
-/// <reference path="../polymer/types/polymer-element.d.ts" />
-/// <reference path="../paper-fab/paper-fab.d.ts" />
-/// <reference path="../iron-flex-layout/iron-flex-layout.d.ts" />
+import {PolymerElement} from '@polymer/polymer/polymer-element.js';
+
+import {html} from '@polymer/polymer/lib/utils/html-tag.js';
 
 declare namespace UiElements {
 
@@ -25,7 +25,7 @@ declare namespace UiElements {
    *
    * See `<paper-fab-menu>` for more information and demos.
    */
-  class PaperFabMenuItem extends Polymer.Element {
+  class PaperFabMenuItem extends PolymerElement {
 
     /**
      * Color of the menu item.
@@ -63,6 +63,9 @@ declare namespace UiElements {
   }
 }
 
-interface HTMLElementTagNameMap {
-  "paper-fab-menu-item": UiElements.PaperFabMenuItem;
+declare global {
+
+  interface HTMLElementTagNameMap {
+    "paper-fab-menu-item": UiElements.PaperFabMenuItem;
+  }
 }

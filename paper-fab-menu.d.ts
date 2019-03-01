@@ -5,18 +5,18 @@
  *   https://github.com/Polymer/tools/tree/master/packages/gen-typescript-declarations
  *
  * To modify these typings, edit the source file(s):
- *   paper-fab-menu.html
+ *   paper-fab-menu.js
  */
 
 
 // tslint:disable:variable-name Describing an API that's defined elsewhere.
 // tslint:disable:no-any describes the API as best we are able today
 
-/// <reference path="../polymer/types/polymer-element.d.ts" />
-/// <reference path="../polymer/types/lib/utils/render-status.d.ts" />
-/// <reference path="../paper-fab/paper-fab.d.ts" />
-/// <reference path="../iron-flex-layout/iron-flex-layout.d.ts" />
-/// <reference path="paper-fab-menu-item.d.ts" />
+import {PolymerElement} from '@polymer/polymer/polymer-element.js';
+
+import {html} from '@polymer/polymer/lib/utils/html-tag.js';
+
+import {afterNextRender} from '@polymer/polymer/lib/utils/render-status.js';
 
 declare namespace UiElements {
 
@@ -50,7 +50,7 @@ declare namespace UiElements {
    * ### Styling
    * Style the menu using `<paper-fab>` variables and mixins.
    */
-  class PaperFabMenu extends Polymer.Element {
+  class PaperFabMenu extends PolymerElement {
 
     /**
      * True when the menu is opened.
@@ -132,6 +132,9 @@ declare namespace UiElements {
   }
 }
 
-interface HTMLElementTagNameMap {
-  "paper-fab-menu": UiElements.PaperFabMenu;
+declare global {
+
+  interface HTMLElementTagNameMap {
+    "paper-fab-menu": UiElements.PaperFabMenu;
+  }
 }

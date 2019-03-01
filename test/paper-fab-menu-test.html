@@ -4,11 +4,14 @@
   <meta charset="utf-8">
   <meta name="viewport" content="width=device-width, minimum-scale=1, initial-scale=1, user-scalable=yes">
   <title>paper-fab-menu test</title>
-  <script src="../../webcomponentsjs/webcomponents-loader.js"></script>
-  <script src="../../web-component-tester/browser.js"></script>
-  <link rel="import" href="../../iron-test-helpers/mock-interactions.html">
-  <link rel="import" href="../paper-fab-menu.html">
-  <link rel="import" href="../paper-fab-menu-item.html">
+
+  <script src="../node_modules/@webcomponents/webcomponentsjs/webcomponents-loader.js"></script>
+  <script src="../node_modules/@polymer/test-fixture/test-fixture.js"></script>
+  <script src="../node_modules/mocha/mocha.js"></script>
+  <script src="../node_modules/chai/chai.js"></script>
+  <script src="../node_modules/wct-mocha/wct-mocha.js"></script>
+  <script src="../node_modules/sinon/pkg/sinon.js"></script>
+
 </head>
 <body>
   <test-fixture id="Simple">
@@ -20,8 +23,10 @@
     </template>
   </test-fixture>
 
-  <script>
-  /* global MockInteractions */
+  <script type="module">
+  import '../paper-fab-menu.js';
+  import '../paper-fab-menu-item.js';
+  import {tap} from '@polymer/iron-test-helpers/mock-interactions.js';
   suite('paper-fab-menu', () => {
     test('Children are hidden', (done) => {
       const element = fixture('Simple');
@@ -118,30 +123,30 @@
       });
 
       test('Opens the element when the click is on the element', () => {
-        MockInteractions.tap(element);
+        tap(element);
         assert.isTrue(element.opened);
       });
 
       test('Closes the element when opened and click is outside the element', () => {
         element.opened = true;
-        MockInteractions.tap(document.body);
+        tap(document.body);
         assert.isFalse(element.opened);
       });
 
       test('Does nothing when not opened (outside click)', () => {
-        MockInteractions.tap(document.body);
+        tap(document.body);
         assert.isFalse(element.opened);
       });
 
       test('Does nothing when opened (element click)', () => {
         element.opened = true;
-        MockInteractions.tap(element);
+        tap(element);
         assert.isTrue(element.opened);
       });
 
       test('Does nothing when clicked on child element', () => {
         element.opened = true;
-        MockInteractions.tap(element.querySelector('paper-fab-menu-item'));
+        tap(element.querySelector('paper-fab-menu-item'));
         assert.isTrue(element.opened);
       });
     });

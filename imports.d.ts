@@ -11,6 +11,3 @@
 
 // tslint:disable:variable-name Describing an API that's defined elsewhere.
 
-/// <reference path="paper-fab-menu.d.ts" />
-/// <reference path="paper-fab-menu-item.d.ts" />
-
