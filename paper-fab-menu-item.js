@@ -17,7 +17,6 @@ the License.
 import {PolymerElement} from '../../@polymer/polymer/polymer-element.js';
 import {html} from '../../@polymer/polymer/lib/utils/html-tag.js';
 import '../../@polymer/paper-fab/paper-fab.js';
-import '../../@polymer/iron-flex-layout/iron-flex-layout.js';
 /**
  * The `<paper-fab-menu-item>` is a menu item that can be used with `<paper-fab-menu>`.
  *
@@ -35,7 +34,8 @@ class PaperFabMenuItem extends PolymerElement {
     <style>
     :host {
       display: block;
-      @apply --layout-flex;
+      flex: 1;
+      flex-basis: 0.000000001px;
       margin: 4px;
     }
 

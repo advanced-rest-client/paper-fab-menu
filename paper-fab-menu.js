@@ -18,7 +18,6 @@ import {PolymerElement} from '../../@polymer/polymer/polymer-element.js';
 import {html} from '../../@polymer/polymer/lib/utils/html-tag.js';
 import {afterNextRender} from '../../@polymer/polymer/lib/utils/render-status.js';
 import '../../@polymer/paper-fab/paper-fab.js';
-import '../../@polymer/iron-flex-layout/iron-flex-layout.js';
 import './paper-fab-menu-item.js';
 /**
  * Material design:
@@ -78,9 +77,11 @@ class PaperFabMenu extends PolymerElement {
     }
 
     .main-items {
-      @apply --layout-vertical;
-      @apply --layout-flex;
-      @apply --layout-self-center;
+      display: flex;
+      flex-direction: column;
+      flex: 1;
+      flex-basis: 0.000000001px;
+      align-self: center;
       -webkit-flex-basis: 0%;
       flex-basis: 0%;
     }
@@ -90,12 +91,14 @@ class PaperFabMenu extends PolymerElement {
     }
 
     .menu-fab-button {
-      @apply --layout-vertical;
-      @apply --layout-self-center;
+      display: flex;
+      flex-direction: column;
+      align-self: center;
     }
 
     .paper-fab-menu-container {
-      @apply --layout-vertical;
+      display: flex;
+      flex-direction: column;
     }
 
     :host(:not([children-visible])) .main-items {
