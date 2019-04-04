@@ -29,14 +29,14 @@
   "devDependencies": {
     "@polymer/gen-typescript-declarations": "^1.6.1",
     "@polymer/iron-component-page": "^4.0.0",
-    "@polymer/iron-demo-helpers": "^3.0.0",
-    "@polymer/iron-test-helpers": "^3.0.0",
-    "@webcomponents/webcomponentsjs": "^2.0.0",
+    "@polymer/iron-demo-helpers": "^3.1.0",
     "@polymer/iron-icons": "^3.0.0",
+    "@polymer/iron-test-helpers": "^3.0.0",
     "@polymer/test-fixture": "^4.0.2",
+    "@webcomponents/webcomponentsjs": "^2.0.0",
     "chai": "^4.2.0",
     "mocha": "^5.2.0",
-    "sinon": "^7.2.3",
+    "sinon": "^7.3.1",
     "wct-mocha": "^1.0.0"
   },
   "main": "paper-fab-menu.js",
@@ -45,7 +45,7 @@
     "The Advanced REST Client authors"
   ],
   "dependencies": {
-    "@polymer/polymer": "^3.0.0",
-    "@polymer/paper-fab": "^3.0.0"
+    "@polymer/paper-fab": "^3.0.0",
+    "@polymer/polymer": "^3.2.0"
   }
 }
