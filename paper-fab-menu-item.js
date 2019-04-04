@@ -14,10 +14,10 @@ WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied. See the
 License for the specific language governing permissions and limitations under
 the License.
 */
-import {PolymerElement} from '@polymer/polymer/polymer-element.js';
-import {html} from '@polymer/polymer/lib/utils/html-tag.js';
-import '@polymer/paper-fab/paper-fab.js';
-import '@polymer/iron-flex-layout/iron-flex-layout.js';
+import {PolymerElement} from '../../@polymer/polymer/polymer-element.js';
+import {html} from '../../@polymer/polymer/lib/utils/html-tag.js';
+import '../../@polymer/paper-fab/paper-fab.js';
+import '../../@polymer/iron-flex-layout/iron-flex-layout.js';
 /**
  * The `<paper-fab-menu-item>` is a menu item that can be used with `<paper-fab-menu>`.
  *
