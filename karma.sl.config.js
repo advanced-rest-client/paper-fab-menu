@@ -5,7 +5,7 @@ const createBaseConfig = require('./karma.conf.js');
 
 module.exports = (config) => {
   const cnf = slSettings();
-  cnf.sauceLabs.testName = 'connectivity-state';
+  cnf.sauceLabs.testName = 'paper-fab-menu';
   cnf.browsers = [
     'SL_Chrome',
     'SL_Chrome-1',
