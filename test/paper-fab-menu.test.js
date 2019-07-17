@@ -36,7 +36,7 @@ describe('<paper-fab-menu>', function() {
     it('Added child is processed', async () => {
       const div = document.createElement('div');
       element.appendChild(div);
-      await aTimeout();
+      await aTimeout(120);
       assert.equal(div.getAttribute('role'), 'menuitem');
       assert.equal(div.getAttribute('aria-hidden'), 'true');
     });
