@@ -1,7 +1,7 @@
 {
   "name": "@advanced-rest-client/paper-fab-menu",
   "description": "A material design floating action button with menu items",
-  "version": "3.0.0-preview.2",
+  "version": "3.0.0",
   "license": "Apache-2.0",
   "main": "paper-fab-menu.js",
   "keywords": [
