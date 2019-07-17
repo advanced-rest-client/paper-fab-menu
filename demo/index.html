@@ -5,22 +5,13 @@
   <meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1">
   <meta name="viewport" content="width=device-width, minimum-scale=1.0, initial-scale=1, user-scalable=yes">
   <title>paper-fab-menu demo page</title>
-  <script src="../../../@webcomponents/webcomponentsjs/webcomponents-loader.js"></script>
-  <script type="module" src="../../../@webcomponents/shadycss/entrypoints/apply-shim.js"></script>
-  <script type="module" src="../../../@polymer/polymer/lib/elements/custom-style.js"></script>
-  <script type="module" src="../../../@polymer/iron-demo-helpers/demo-pages-shared-styles.js"></script>
-  <script type="module" src="../../../@polymer/iron-demo-helpers/demo-snippet.js"></script>
-  <script type="module" src="../../../@polymer/iron-icons/iron-icons.js"></script>
+  <script type="module" src="../node_modules/@advanced-rest-client/arc-demo-helper/arc-demo-helper.js"></script>
+  <script type="module" src="../node_modules/@polymer/iron-icons/iron-icons.js"></script>
+  <script type="module" src="../node_modules/@polymer/paper-fab/paper-fab.js"></script>
   <script type="module" src="../paper-fab-menu.js"></script>
+  <!-- <script type="module" src="../paper-fab-menu-item.js"></script> -->
 
-  <custom-style>
-    <style is="custom-style" include="demo-pages-shared-styles">
-    :root {
-      --demo-snippet-demo: {
-        position: relative;
-        min-height: 180px;
-      }
-    }
+  <style>
     html,
     body {
       overflow: auto;
@@ -28,8 +19,7 @@
 
     paper-fab-menu {
       position: absolute;
-      right: 20px;
-      bottom: 20px;
+      bottom: 0px;
     }
 
     .content {
@@ -37,58 +27,87 @@
       margin-left: auto;
       margin-right: auto;
     }
-    </style>
-  </custom-style>
+
+    .positioned-container {
+      position: relative;
+      width: 60px;
+      height: 60px;
+    }
+  </style>
 </head>
 
 <body>
   <div class="vertical-section-container centered" role="main">
     <h3>Right positioned</h3>
-    <demo-snippet>
+    <arc-demo-helper>
       <template>
-        <paper-fab-menu color="#2196F3" icon="add" class="left">
-          <paper-fab-menu-item color="red" title="Polymer" icon="polymer"></paper-fab-menu-item>
-          <paper-fab-menu-item color="#9C27B0" title="Favorites" icon="star"></paper-fab-menu-item>
-          <paper-fab-menu-item color="#2196F3" title="Refresh" icon="refresh"></paper-fab-menu-item>
+        <paper-fab-menu icon="add" class="right">
+          <paper-fab mini class="color-1" title="Polymer" icon="polymer"></paper-fab>
+          <paper-fab mini class="color-2" title="Favorites" icon="star"></paper-fab>
+          <paper-fab mini class="color-3" title="Refresh" icon="refresh"></paper-fab>
         </paper-fab-menu>
         <style>
-          paper-fab-menu.left {
-            position: absolute;
-            left: 20px;
+          paper-fab-menu.right {
+            position: fixed;
+            right: 20px;
             bottom: 20px;
+            z-index: 1;
+            --paper-fab-menu-background-color: #8BC34A;
+          }
+
+          .color-1 {
+            background-color: red;
+          }
+
+          .color-2 {
+            background-color: #9C27B0;
+          }
+
+          .color-3 {
+            background-color: #2196F3;
           }
         </style>
       </template>
-    </demo-snippet>
+    </arc-demo-helper>
 
     <h3>Left positioned</h3>
-    <demo-snippet>
+    <arc-demo-helper>
       <template>
-        <paper-fab-menu icon="add">
-          <paper-fab-menu-item title="Polymer" icon="polymer"></paper-fab-menu-item>
-          <paper-fab-menu-item title="Favorites" icon="star"></paper-fab-menu-item>
-          <paper-fab-menu-item title="Refresh" icon="refresh"></paper-fab-menu-item>
-          <paper-fab-menu-item title="Text label" label="D"></paper-fab-menu-item>
+        <paper-fab-menu icon="add" class="left">
+          <paper-fab mini title="Polymer" icon="polymer"></paper-fab>
+          <paper-fab mini title="Favorites" icon="star"></paper-fab>
+          <paper-fab mini title="Refresh" icon="refresh"></paper-fab>
+          <paper-fab mini title="Text label" label="D"></paper-fab>
         </paper-fab-menu>
+        <style>
+          paper-fab-menu.left {
+            position: fixed;
+            left: 20px;
+            bottom: 20px;
+            z-index: 1;
+          }
+        </style>
       </template>
-    </demo-snippet>
+    </arc-demo-helper>
 
     <h3>Links menu items</h3>
-    <demo-snippet>
+    <arc-demo-helper>
       <template>
-        <paper-fab-menu icon="add">
-          <a target="_blank" href="http://spacee.xyz">
-            <paper-fab-menu-item title="Polymer" icon="polymer"></paper-fab-menu-item>
-          </a>
-          <a target="_blank" href="http://spacee.xyz">
-            <paper-fab-menu-item title="Favorites" icon="star"></paper-fab-menu-item>
-          </a>
-          <a target="_blank" href="http://spacee.xyz">
-            <paper-fab-menu-item title="Refresh" icon="refresh"></paper-fab-menu-item>
-          </a>
-        </paper-fab-menu>
+        <div class="positioned-container">
+          <paper-fab-menu icon="add">
+            <a target="_blank" href="http://spacee.xyz">
+              <paper-fab mini title="Polymer" icon="polymer"></paper-fab>
+            </a>
+            <a target="_blank" href="http://spacee.xyz">
+              <paper-fab mini title="Favorites" icon="star"></paper-fab>
+            </a>
+            <a target="_blank" href="http://spacee.xyz">
+              <paper-fab mini title="Refresh" icon="refresh"></paper-fab>
+            </a>
+          </paper-fab-menu>
+        </div>
       </template>
-    </demo-snippet>
+    </arc-demo-helper>
   </div>
 </body>
 </html>

@@ -12,11 +12,7 @@
 // tslint:disable:variable-name Describing an API that's defined elsewhere.
 // tslint:disable:no-any describes the API as best we are able today
 
-import {PolymerElement} from '@polymer/polymer/polymer-element.js';
-
-import {html} from '@polymer/polymer/lib/utils/html-tag.js';
-
-import {afterNextRender} from '@polymer/polymer/lib/utils/render-status.js';
+import {LitElement, html, css} from 'lit-element';
 
 declare namespace UiElements {
 
@@ -32,35 +28,24 @@ declare namespace UiElements {
    *
    * ```html
    * <paper-fab-menu color="teal" icon="add">
-   * <paper-fab-menu-item color="teal" tooltip="Favorites" icon="star"></paper-fab-menu-item>
-   * <paper-fab-menu-item color="teal" tooltip="Favorites" icon="star"></paper-fab-menu-item>
-   * <paper-fab-menu-item color="teal" tooltip="Favorites" icon="star"></paper-fab-menu-item>
+   *  <paper-fab mini icon="star"></paper-fab-menu-item>
+   *  <paper-fab mini icon="star"></paper-fab-menu-item>
+   *  <paper-fab mini icon="star"></paper-fab-menu-item>
    * </paper-fab-menu>
    * ```
    *
-   * ### Icons
-   *
-   * Import your `iron-icons` library and use icons you like.
-   *
-   * ```html
-   * <link rel="import" href="bower_components/iron-icons/iron-icons.html">
-   * <paper-fab-menu icon="add"></paper-fab-menu>
-   * ```
-   *
    * ### Styling
-   * Style the menu using `<paper-fab>` variables and mixins.
+   * Style the menu using `<paper-fab>` variables.
+   *
+   * The element uses `--paper-fab-menu-background-color` variable to set a
+   * background color or the main `<paper-fab>` element.
    */
-  class PaperFabMenu extends PolymerElement {
+  class PaperFabMenu extends LitElement {
 
     /**
      * True when the menu is opened.
      */
-    opened: number|null|undefined;
-
-    /**
-     * The color of the main button.
-     */
-    color: string|null|undefined;
+    opened: boolean|null|undefined;
 
     /**
      * The icon to render. It's binded to `paper-fab`'s icon property.
@@ -68,22 +53,16 @@ declare namespace UiElements {
     icon: string|null|undefined;
 
     /**
-     * Computed value of the delay time when the list child is
-     * opened / closed.
-     */
-    _delayTime: number|null|undefined;
-
-    /**
      * If true then the children container is displayed.
      */
-    readonly childrenVisible: boolean|null|undefined;
-
-    /**
-     * Tru if it's a Safari which need a fix...
-     */
-    safari: boolean|null|undefined;
+    childrenVisible: boolean|null|undefined;
+    constructor();
     connectedCallback(): void;
     disconnectedCallback(): void;
+    firstUpdated(): void;
+    render(): any;
+    _childrenUpdated(mutations: any): void;
+    _setChanged(prop: any, value: any): any;
 
     /**
      * Toogles the menu
@@ -106,29 +85,34 @@ declare namespace UiElements {
      * @param opened Current menu state
      */
     _openedChanged(opened: Boolean|null): void;
-
-    /**
-     * Changes children opened state
-     */
-    _updateChildrenState(children: Array<Element|null>|null, opened: Boolean|null): void;
+    _openedTimeout(children: any, opened: any): void;
 
     /**
      * Updates animation delay time attribute in distributed children.
-     */
-    _updateDelay(children: Array<Element|null>|null): void;
-
-    /**
-     * Called when color has changed.
      *
-     * @param color Color to set on the fab.
+     * @returns Time of the latest delay set on the children animations.
      */
-    _colorChanged(color: String|null): void;
+    _updateDelay(children: Array<Element|null>|null, opened: Boolean|null): Number|null;
 
     /**
      * Closes menu when click is detected outside this control.
      */
     _detectClick(e: MouseEvent|null): void;
-    _computeContentClass(safari: any): any;
+
+    /**
+     * MutationObserver initialized in the constructor does not
+     * triggers changes when the element is initialized. This
+     * function processes nodes set up declaratively when the element is still
+     * initializing.
+     */
+    _processInitialNodes(): void;
+
+    /**
+     * Adds `role` and `aria-hidden` attribbutes to passed nodes.
+     *
+     * @param nodes List of nodes to process.
+     */
+    _nodesAddedHandler(nodes: Array<Node|null>|null): void;
   }
 }
 
